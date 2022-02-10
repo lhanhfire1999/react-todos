@@ -1,11 +1,13 @@
+import React from "react";
 import { useStore } from "./Store";
 import { Footer, Header, TodoList } from "./Component";
 
 function App() {
-  const [state] = useStore();
+  const [state, dispatch] = useStore();
+
   return (
-    <section class="todoapp">
-      <Header />
+    <section className="todoapp">
+      <Header dispatch={dispatch} />
       {state.todos.length > 0 && (
         <>
           <TodoList />

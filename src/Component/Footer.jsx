@@ -1,12 +1,12 @@
 const Footer = () => {
   return (
-    <footer class="footer">
-      <span class="todo-count">
+    <footer className="footer">
+      <span className="todo-count">
         <strong>0</strong> item left
       </span>
-      <ul class="filters">
+      <ul className="filters">
         <li>
-          <a class="selected" href="#/">
+          <a className="selected" href="#/">
             All
           </a>
         </li>
@@ -17,7 +17,7 @@ const Footer = () => {
           <a href="#/">Completed</a>
         </li>
       </ul>
-      <button class="clear-completed">Clear completed</button>
+      <button className="clear-completed">Clear completed</button>
     </footer>
   );
 };
