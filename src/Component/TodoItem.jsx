@@ -1,7 +1,22 @@
 import clsx from "clsx";
+import React from "react";
 import { Actions } from "../Store";
+
 const TodoItem = ({ todo, dispatch }) => {
   const { id, content, completed } = todo;
+  const [state, setState] = React.useState({ edit: content, editIndex: null });
+
+  const handleChangeEdit = (e) => {
+    setState((prev) => ({ ...prev, edit: e.target.value }));
+  };
+
+  const handleOnEdit = (id) => {
+    setState((prev) => ({ ...prev, editIndex: id }));
+  };
+
+  const handleOffEdit = () => {
+    setState((prev) => ({ ...prev, editIndex: null }));
+  };
 
   const handleDelete = (id) => {
     dispatch(Actions.deleteTodo(id));
@@ -12,7 +27,12 @@ const TodoItem = ({ todo, dispatch }) => {
   };
 
   return (
-    <li className={clsx({ completed: completed })}>
+    <li
+      className={clsx({
+        completed: completed,
+        editing: state.editIndex === id,
+      })}
+    >
       <div className="view">
         <input
           className="toggle"
@@ -20,10 +40,15 @@ const TodoItem = ({ todo, dispatch }) => {
           checked={completed}
           onChange={() => handleToggle(id)}
         />
-        <label>{content}</label>
+        <label onClick={() => handleOnEdit(id)}>{content}</label>
         <button className="destroy" onClick={() => handleDelete(id)}></button>
       </div>
-      {/* <input className="edit" value="Create a TodoMVC template" /> */}
+      <input
+        className="edit"
+        value={state.edit}
+        onChange={handleChangeEdit}
+        onBlur={handleOffEdit}
+      />
     </li>
   );
 };

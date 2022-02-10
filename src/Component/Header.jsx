@@ -4,7 +4,7 @@ import { Actions } from "../Store";
 const Header = ({ dispatch }) => {
   const handleKeyup = (e) => {
     if (e.keyCode === 13) {
-      dispatch(Actions.addTodo(e.target.value));
+      dispatch(Actions.addTodo(e.target.value.trim()));
       e.target.value = null;
     }
   };

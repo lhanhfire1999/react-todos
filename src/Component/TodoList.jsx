@@ -3,6 +3,7 @@ import TodoItem from "./TodoItem";
 
 const TodoList = () => {
   const [state, dispatch] = useStore();
+
   return (
     <section className="main">
       <input id="toggle-all" className="toggle-all" type="checkbox" />

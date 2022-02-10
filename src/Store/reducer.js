@@ -29,7 +29,6 @@ const reducer = (state, action) => {
       newState.todos.forEach((todo) => {
         if (todo.id === action.payload) {
           todo.completed = !todo.completed;
-          console.log(state);
         }
       });
       return newState;
