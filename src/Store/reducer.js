@@ -10,11 +10,23 @@ const initialState = {
   todos: [],
 };
 
+const randomId = (array) => {
+  let result = null;
+  do {
+    let random = Math.floor(Math.random() * 1000) + 1;
+    let isSameId = array.some((item) => item.id === random);
+    if (!isSameId) {
+      result = random;
+    }
+  } while (!result);
+  return result;
+};
+
 const reducer = (state, action) => {
   switch (action.type) {
     case ADD_TODO: {
       const newTodo = {
-        id: state.todos.length + 1,
+        id: randomId(state.todos),
         content: action.payload,
         completed: false,
       };

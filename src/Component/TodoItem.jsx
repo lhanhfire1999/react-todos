@@ -2,30 +2,39 @@ import clsx from "clsx";
 import React from "react";
 import { Actions } from "../Store";
 
-const TodoItem = ({ todo, dispatch }) => {
+const TodoItem = ({ todo, editIndex, onEdit, dispatch }) => {
   const { id, content, completed } = todo;
-  const [state, setState] = React.useState({ edit: content, editIndex: null });
+  const [inputEdit, setInputEdit] = React.useState(content);
 
   const handleChangeEdit = (e) => {
-    setState((prev) => ({ ...prev, edit: e.target.value }));
+    setInputEdit(e.target.value.trim());
   };
 
-  const handleOnEdit = (id) => {
-    setState((prev) => ({ ...prev, editIndex: id }));
+  const handleOnEdit = () => {
+    onEdit.handleOnEdit(id);
   };
 
-  const handleOffEdit = (id) => {
-    const payload = { id, content: state.edit };
-
-    setState((prev) => ({ ...prev, editIndex: null }));
-    dispatch(Actions.editContent(payload));
+  const handleOffEdit = {
+    onBlur() {
+      const payload = { id, content: inputEdit };
+      onEdit.handleOffEdit();
+      dispatch(Actions.editContent(payload));
+    },
+    keyUp(e) {
+      if (e.keyCode === 27) {
+        setInputEdit(content);
+        onEdit.handleOffEdit();
+      } else if (e.keyCode === 13) {
+        this.onBlur();
+      }
+    },
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = () => {
     dispatch(Actions.deleteTodo(id));
   };
 
-  const handleToggle = (id) => {
+  const handleToggle = () => {
     dispatch(Actions.toggleCompleted(id));
   };
 
@@ -33,7 +42,7 @@ const TodoItem = ({ todo, dispatch }) => {
     <li
       className={clsx({
         completed: completed,
-        editing: state.editIndex === id,
+        editing: editIndex === id,
       })}
     >
       <div className="view">
@@ -41,16 +50,17 @@ const TodoItem = ({ todo, dispatch }) => {
           className="toggle"
           type="checkbox"
           checked={completed}
-          onChange={() => handleToggle(id)}
+          onChange={handleToggle}
         />
-        <label onClick={() => handleOnEdit(id)}>{state.edit}</label>
-        <button className="destroy" onClick={() => handleDelete(id)}></button>
+        <label onClick={handleOnEdit}>{inputEdit}</label>
+        <button className="destroy" onClick={handleDelete}></button>
       </div>
       <input
         className="edit"
-        value={state.edit}
+        value={inputEdit}
         onChange={handleChangeEdit}
-        onBlur={() => handleOffEdit(id)}
+        onBlur={handleOffEdit.onBlur}
+        onKeyUp={(e) => handleOffEdit.keyUp(e)}
       />
     </li>
   );
