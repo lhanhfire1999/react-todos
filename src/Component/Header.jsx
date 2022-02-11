@@ -11,7 +11,6 @@ const Header = ({ dispatch }) => {
 
   return (
     <header className="header">
-      {console.log("Header re-render")}
       <h1>todos</h1>
       <input
         className="new-todo"

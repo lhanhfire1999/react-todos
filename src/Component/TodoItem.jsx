@@ -14,8 +14,11 @@ const TodoItem = ({ todo, dispatch }) => {
     setState((prev) => ({ ...prev, editIndex: id }));
   };
 
-  const handleOffEdit = () => {
+  const handleOffEdit = (id) => {
+    const payload = { id, content: state.edit };
+
     setState((prev) => ({ ...prev, editIndex: null }));
+    dispatch(Actions.editContent(payload));
   };
 
   const handleDelete = (id) => {
@@ -40,14 +43,14 @@ const TodoItem = ({ todo, dispatch }) => {
           checked={completed}
           onChange={() => handleToggle(id)}
         />
-        <label onClick={() => handleOnEdit(id)}>{content}</label>
+        <label onClick={() => handleOnEdit(id)}>{state.edit}</label>
         <button className="destroy" onClick={() => handleDelete(id)}></button>
       </div>
       <input
         className="edit"
         value={state.edit}
         onChange={handleChangeEdit}
-        onBlur={handleOffEdit}
+        onBlur={() => handleOffEdit(id)}
       />
     </li>
   );

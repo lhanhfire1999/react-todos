@@ -9,4 +9,5 @@ const logger = (reducer) => {
     return nextState;
   };
 };
+
 export default logger;

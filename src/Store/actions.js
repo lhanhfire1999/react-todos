@@ -1,4 +1,9 @@
-import { ADD_TODO, DELETE_TODO, TOGGLE_COMPLETED } from "./constants";
+import {
+  ADD_TODO,
+  DELETE_TODO,
+  TOGGLE_COMPLETED,
+  EDIT_CONTENT,
+} from "./constants";
 
 const addTodo = (payload) => {
   return {
@@ -21,4 +26,11 @@ const toggleCompleted = (payload) => {
   };
 };
 
-export { addTodo, deleteTodo, toggleCompleted };
+const editContent = (payload) => {
+  return {
+    type: EDIT_CONTENT,
+    payload: payload,
+  };
+};
+
+export { addTodo, deleteTodo, toggleCompleted, editContent };
