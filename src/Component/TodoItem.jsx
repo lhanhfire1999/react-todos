@@ -55,4 +55,5 @@ const TodoItem = ({ todo, dispatch }) => {
     </li>
   );
 };
+
 export default TodoItem;

@@ -3,6 +3,7 @@ import {
   DELETE_TODO,
   TOGGLE_COMPLETED,
   EDIT_CONTENT,
+  TOGGLE_ALL_COMPLETED,
 } from "./constants";
 
 const addTodo = (payload) => {
@@ -33,4 +34,17 @@ const editContent = (payload) => {
   };
 };
 
-export { addTodo, deleteTodo, toggleCompleted, editContent };
+const toggleAllCompleted = (payload) => {
+  return {
+    type: TOGGLE_ALL_COMPLETED,
+    payload: payload,
+  };
+};
+
+export {
+  addTodo,
+  deleteTodo,
+  toggleCompleted,
+  editContent,
+  toggleAllCompleted,
+};
