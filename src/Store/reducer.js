@@ -1,4 +1,5 @@
-import GeneralMethod from "../utils/generalMethod";
+import GeneralMethod from "../Utils/generalMethod";
+import helperStorage from "../Utils/storage";
 import {
   ADD_TODO,
   CHANGE_FILTER,
@@ -10,7 +11,7 @@ import {
 } from "./constants";
 
 const initialState = {
-  todos: [],
+  todos: helperStorage.get,
   filter: "all",
 };
 
@@ -22,12 +23,12 @@ const reducer = (state, action) => {
         content: action.payload,
         completed: false,
       };
-      return { ...state, todos: [...state.todos, newTodo] };
+      return helperStorage.save({ ...state, todos: [...state.todos, newTodo] });
     }
 
     case DELETE_TODO: {
       const newTodos = state.todos.filter((todo) => todo.id !== action.payload);
-      return { ...state, todos: newTodos };
+      return helperStorage.save({ ...state, todos: newTodos });
     }
 
     case TOGGLE_COMPLETED: {
@@ -39,8 +40,7 @@ const reducer = (state, action) => {
         }
         return prev;
       }, []);
-
-      return { ...state, todos: newTodos };
+      return helperStorage.save({ ...state, todos: newTodos });
 
       // const updateCompleted = state.todos.map(({ id, content, completed }) => {
       //   if (id === action.payload) {
@@ -66,8 +66,7 @@ const reducer = (state, action) => {
         }
         return prev;
       }, []);
-
-      return { ...state, todos: newTodos };
+      return helperStorage.save({ ...state, todos: newTodos });
     }
 
     case TOGGLE_ALL_COMPLETED: {
@@ -76,12 +75,12 @@ const reducer = (state, action) => {
         return prev;
       }, []);
 
-      return { ...state, todos: newTodos };
+      return helperStorage.save({ ...state, todos: newTodos });
     }
 
     case CLEAR_COMPLETED: {
       const newTodos = state.todos.filter((todo) => todo.completed === false);
-      return { ...state, todos: newTodos };
+      return helperStorage.save({ ...state, todos: newTodos });
     }
 
     case CHANGE_FILTER: {
