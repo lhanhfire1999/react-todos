@@ -4,6 +4,8 @@ import {
   TOGGLE_COMPLETED,
   EDIT_CONTENT,
   TOGGLE_ALL_COMPLETED,
+  CLEAR_COMPLETED,
+  CHANGE_FILTER,
 } from "./constants";
 
 const addTodo = (payload) => {
@@ -40,6 +42,17 @@ const toggleAllCompleted = (payload) => {
     payload: payload,
   };
 };
+const clearCompleted = () => {
+  return {
+    type: CLEAR_COMPLETED,
+  };
+};
+const changeFilter = (payload) => {
+  return {
+    type: CHANGE_FILTER,
+    payload: payload,
+  };
+};
 
 export {
   addTodo,
@@ -47,4 +60,6 @@ export {
   toggleCompleted,
   editContent,
   toggleAllCompleted,
+  clearCompleted,
+  changeFilter,
 };

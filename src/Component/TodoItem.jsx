@@ -7,7 +7,7 @@ const TodoItem = ({ todo, editIndex, onEdit, dispatch }) => {
   const [inputEdit, setInputEdit] = React.useState(content);
 
   const handleChangeEdit = (e) => {
-    setInputEdit(e.target.value.trim());
+    setInputEdit(e.target.value);
   };
 
   const handleOnEdit = () => {
@@ -16,9 +16,15 @@ const TodoItem = ({ todo, editIndex, onEdit, dispatch }) => {
 
   const handleOffEdit = {
     onBlur() {
-      const payload = { id, content: inputEdit };
+      if (inputEdit.trim() !== content) {
+        const payload = { id, content: inputEdit.trim() };
+        onEdit.handleOffEdit();
+        dispatch(Actions.editContent(payload));
+      }
+
+      setInputEdit(inputEdit.trim());
       onEdit.handleOffEdit();
-      dispatch(Actions.editContent(payload));
+      return null;
     },
     keyUp(e) {
       if (e.keyCode === 27) {
@@ -52,7 +58,7 @@ const TodoItem = ({ todo, editIndex, onEdit, dispatch }) => {
           checked={completed}
           onChange={handleToggle}
         />
-        <label onClick={handleOnEdit}>{inputEdit}</label>
+        <label onClick={handleOnEdit}>{content}</label>
         <button className="destroy" onClick={handleDelete}></button>
       </div>
       <input

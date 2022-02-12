@@ -1,5 +1,6 @@
 import React from "react";
 import { Actions, useStore } from "../Store";
+import GeneralMethod from "../utils/generalMethod";
 import TodoItem from "./TodoItem";
 
 const TodoList = () => {
@@ -20,7 +21,7 @@ const TodoList = () => {
   };
 
   const checkAllCompleted = React.useMemo(() => {
-    const check = state.todos.every((todo) => todo.completed === true);
+    const check = state.todos.every((todo) => todo.completed);
     return check;
   }, [state.todos]);
 
@@ -35,15 +36,17 @@ const TodoList = () => {
       />
       <label htmlFor="toggle-all">Mark all as complete</label>
       <ul className="todo-list">
-        {state.todos.map((todo) => (
-          <TodoItem
-            key={todo.id}
-            todo={todo}
-            editIndex={editIndex}
-            onEdit={handleEdit}
-            dispatch={dispatch}
-          />
-        ))}
+        {state.todos
+          .filter(GeneralMethod.filterMode[state.filter])
+          .map((todo) => (
+            <TodoItem
+              key={todo.id}
+              todo={todo}
+              editIndex={editIndex}
+              onEdit={handleEdit}
+              dispatch={dispatch}
+            />
+          ))}
       </ul>
     </section>
   );

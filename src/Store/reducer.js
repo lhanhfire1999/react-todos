@@ -1,5 +1,8 @@
+import GeneralMethod from "../utils/generalMethod";
 import {
   ADD_TODO,
+  CHANGE_FILTER,
+  CLEAR_COMPLETED,
   DELETE_TODO,
   EDIT_CONTENT,
   TOGGLE_ALL_COMPLETED,
@@ -8,25 +11,14 @@ import {
 
 const initialState = {
   todos: [],
-};
-
-const randomId = (array) => {
-  let result = null;
-  do {
-    let random = Math.floor(Math.random() * 1000) + 1;
-    let isSameId = array.some((item) => item.id === random);
-    if (!isSameId) {
-      result = random;
-    }
-  } while (!result);
-  return result;
+  filter: "all",
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
     case ADD_TODO: {
       const newTodo = {
-        id: randomId(state.todos),
+        id: GeneralMethod.randomId(state.todos),
         content: action.payload,
         completed: false,
       };
@@ -85,6 +77,15 @@ const reducer = (state, action) => {
       }, []);
 
       return { ...state, todos: newTodos };
+    }
+
+    case CLEAR_COMPLETED: {
+      const newTodos = state.todos.filter((todo) => todo.completed === false);
+      return { ...state, todos: newTodos };
+    }
+
+    case CHANGE_FILTER: {
+      return { ...state, filter: action.payload };
     }
 
     default:
