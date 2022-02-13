@@ -1,5 +1,5 @@
-import GeneralMethod from "../Utils/generalMethod";
-import helperStorage from "../Utils/storage";
+import GeneralMethod from "../utils/generalMethod";
+import helperStorage from "../utils/storage";
 import {
   ADD_TODO,
   CHANGE_FILTER,

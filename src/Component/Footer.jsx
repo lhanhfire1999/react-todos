@@ -1,6 +1,6 @@
 import React from "react";
 import { Actions, useStore } from "../Store";
-import GeneralMethod from "../Utils/generalMethod";
+import GeneralMethod from "../utils/generalMethod";
 import FilterMode from "./FilterMode";
 
 const Footer = () => {
