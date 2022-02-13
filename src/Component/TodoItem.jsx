@@ -17,6 +17,12 @@ const TodoItem = ({ todo, editIndex, onEdit, dispatch }) => {
   const handleOffEdit = {
     onBlur() {
       if (inputEdit.trim() !== content) {
+        if (!inputEdit.trim()) {
+          onEdit.handleOffEdit();
+          dispatch(Actions.deleteTodo(id));
+          return null;
+        }
+
         const payload = { id, content: inputEdit.trim() };
         onEdit.handleOffEdit();
         dispatch(Actions.editContent(payload));
